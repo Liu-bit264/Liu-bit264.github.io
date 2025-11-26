@@ -275,88 +275,6 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/26/%E5%B8%A6%E9%80%9A%E6%BB%A4%E6%B3%A2%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liu-bit264">
-      <meta itemprop="description" content="Here’s A Nobody">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liu-bit264">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/11/26/%E5%B8%A6%E9%80%9A%E6%BB%A4%E6%B3%A2%E5%99%A8/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-11-26 17:09:58 / 修改时间：17:36:15" itemprop="dateCreated datePublished" datetime="2025-11-26T17:09:58+08:00">2025-11-26</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>155</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="带通滤波器"><a href="#带通滤波器" class="headerlink" title="带通滤波器"></a>带通滤波器</h1><hr>
-<h4 id="一、传递函数"><a href="#一、传递函数" class="headerlink" title="一、传递函数"></a>一、传递函数</h4><h5 id="1-标准形式传递函数"><a href="#1-标准形式传递函数" class="headerlink" title="1.标准形式传递函数"></a>1.标准形式传递函数</h5><p>$$<br>H(s)&#x3D;{\frac{Y(s)}{U(s)} }&#x3D;{\frac{({\frac{ { {\omega}<em>{0} } } {Q} } {\times}{s})} {({s^2} {+}{ {\frac{{\omega}</em>{0} } {Q} }s}{+}{ {\omega}_{0}^{2} }) } }<br>$$</p>
-<h5 id="2-通用形式传递函数"><a href="#2-通用形式传递函数" class="headerlink" title="2.通用形式传递函数"></a>2.通用形式传递函数</h5><p>$$<br>H(s)&#x3D;{\frac{Y(s)} {U(s)} }&#x3D;{\frac{({b_{1} } {s})} {(s^{2}+a_{1}s+a_{0}) } }<br>$$</p>
-<h5 id="3-参数说明"><a href="#3-参数说明" class="headerlink" title="3.参数说明"></a>3.参数说明</h5><p>·	<code>s</code>:拉普拉斯变量</p>
-<p>·	<code>Y(s)</code>:输出信号的拉普拉斯变换</p>
-<p>·	<code>U(s)</code>:输入信号的拉普拉斯变换</p>
-<p>·	<code>ω₀</code>:滤波器中心频率，其中${ {\omega}&#x3D;2{\pi}f}$</p>
-<p>·	<code>Q</code>:品质因数，决定滤波器带宽</p>
-<p>​		对应关系:	$a_{1}&#x3D;{\frac{ {\omega}<em>{0} } {Q} }$,$a</em>{0}&#x3D;{\omega}<em>{0}^{2}$,${b_1}&#x3D;{\frac{ {\omega}</em>{0} }{Q} }$</p>
-<p>​		</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/26/%E8%A7%A6%E5%8F%91%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -410,74 +328,217 @@ mjx-container[display="true"] + br {
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h1><hr>
-<h2 id="一、非钟控触发器"><a href="#一、非钟控触发器" class="headerlink" title="一、非钟控触发器"></a>一、非钟控触发器</h2><h4 id="RS触发器"><a href="#RS触发器" class="headerlink" title="RS触发器"></a>RS触发器</h4><p><img src="/images%5CFlipFlop%5CRS_BFF.png" alt="基本RS触发器" title="基本RS触发器"></p>
-<p>上图中，$S$、$R$均为低电平有效，$R$表示复位，$S$表示置位，基本RS触发器的特征方程为：<br>$$<br>\begin{cases}<br>Q^{n+1}&#x3D;S_{D}+{\overline{R_{D} } } Q^{n}\<br>{\overline{S_{D} } }+{\overline{R_{D} } }&#x3D;1<br>\end{cases}<br>$$<br>其中，${\overline{S_{D} } }+{\overline{R_{D} } }&#x3D;1$是约束条件，当该条件不满足时，基本RS触发器出现竞争状态，输出不定</p>
+          <h1>触发器</h1>
+<hr>
+<h2 id="一、非钟控触发器">一、非钟控触发器</h2>
+<h4 id="RS触发器">RS触发器</h4>
+<p><img src="images%5CFlipFlop%5CRS_BFF.png" alt="基本RS触发器" title="基本RS触发器"></p>
+<p>上图中，$S$、$R$均为低电平有效，$R$表示复位，$S$表示置位，基本RS触发器的特征方程为：<br>
+$$<br>
+\begin{cases}<br>
+Q^{n+1}=S_{D}+{\overline{R_{D} } } Q^{n}\<br>
+{\overline{S_{D} } }+{\overline{R_{D} } }=1<br>
+\end{cases}<br>
+$$<br>
+其中，${\overline{S_{D} } }+{\overline{R_{D} } }=1$是约束条件，当该条件不满足时，基本RS触发器出现竞争状态，输出不定</p>
 <p>基本RS触发器的应用电路是<strong>三人抢答电路</strong></p>
 <p>相关知识点：状态转移真值表、状态转移图、激励表</p>
 <hr>
-<h2 id="二、钟控触发器"><a href="#二、钟控触发器" class="headerlink" title="二、钟控触发器"></a>二、钟控触发器</h2><hr>
-<h4 id="1-钟控RS触发器"><a href="#1-钟控RS触发器" class="headerlink" title="1. 钟控RS触发器"></a>1. 钟控RS触发器</h4><p><img src="/images%5CFlipFlop%5CCLK_RS_FF.png" alt="钟控RS触发器" title="钟控RS触发器"></p>
-<p>钟控RS触发器在基本RS触发器的基础上引入了两个与非门作为时钟控制电路，其直接输入为：<br>$$<br>{\overline{S_{D} } }&#x3D;{\overline{S{\cdot}CP} },{\overline{R_{D} } }&#x3D;{\overline{R{\cdot}CP} }<br>$$<br>当$CP&#x3D;0$时，触发器状态维持不变，当$CP&#x3D;1$时，钟控RS触发器的状态方程为：<br>$$<br>\begin{cases}<br>{Q^{n+1} }&#x3D;S+{\overline{R}}Q^{n}\<br>RS&#x3D;0<br>\end{cases}<br>$$<br>其中，$RS&#x3D;0$是约束条件，当该条件不满足时，钟控RS触发器出现竞争状态，输出不定</p>
+<h2 id="二、钟控触发器">二、钟控触发器</h2>
+<hr>
+<h4 id="1-钟控RS触发器">1. 钟控RS触发器</h4>
+<p><img src="images%5CFlipFlop%5CCLK_RS_FF.png" alt="钟控RS触发器" title="钟控RS触发器"></p>
+<p>钟控RS触发器在基本RS触发器的基础上引入了两个与非门作为时钟控制电路，其直接输入为：<br>
+$$<br>
+{\overline{S_{D} } }={\overline{S{\cdot}CP} },{\overline{R_{D} } }={\overline{R{\cdot}CP} }<br>
+$$<br>
+当$CP=0$时，触发器状态维持不变，当$CP=1$时，钟控RS触发器的状态方程为：<br>
+$$<br>
+\begin{cases}<br>
+{Q^{n+1} }=S+{\overline{R}}Q^{n}\<br>
+RS=0<br>
+\end{cases}<br>
+$$<br>
+其中，$RS=0$是约束条件，当该条件不满足时，钟控RS触发器出现竞争状态，输出不定</p>
 <p>钟控RS触发器的状态转移真值表与基本RS触发器的状态转移真值表相同</p>
 <hr>
-<h4 id="2-1-钟控D触发器"><a href="#2-1-钟控D触发器" class="headerlink" title="2.1. 钟控D触发器"></a>2.1. 钟控D触发器</h4><p><img src="/images%5CFlipFlop%5CCLK_DFF.png" alt="钟控D触发器" title="钟控D触发器"></p>
+<h4 id="2-1-钟控D触发器">2.1. 钟控D触发器</h4>
+<p><img src="images%5CFlipFlop%5CCLK_DFF.png" alt="钟控D触发器" title="钟控D触发器"></p>
 <p>D触发器将钟控RS触发器中的$R$与${\overline{S_{D}}}$连接，只保留了一个$Data$输入端，常用作异步计数器</p>
-<p>其直接输入为：<br>$$</p>
+<p>其直接输入为：<br>
+$$</p>
 
 {\overline{S_{D} } }={\overline{D{\cdot}CP} },
 {\overline{R_{D} } }={\overline{{\overline{S_{D} } } {\cdot}CP} }
 
-<p>$$<br>当$CP&#x3D;0$时，${\overline{S_{D}}}&#x3D;1$，${\overline{R_{D}}}&#x3D;1$，触发器状态维持不变</p>
-<p>当$CP&#x3D;1$时，D触发器的特征方程为：<br>$$<br>Q_{n+1}&#x3D;D<br>$$<br>D触发器的约束条件自动满足</p>
+<p>$$<br>
+当$CP=0$时，${\overline{S_{D}}}=1$，${\overline{R_{D}}}=1$，触发器状态维持不变</p>
+<p>当$CP=1$时，D触发器的特征方程为：<br>
+$$<br>
+Q_{n+1}=D<br>
+$$<br>
+D触发器的约束条件自动满足</p>
 <p>在时钟作用下，D触发器的次态$Q_{n+1}$始终与$D$相同，因此，D触发器也被称为延迟触发器或D型锁存器</p>
 <p>D触发器可以实现下文JK触发器(需要增加逻辑门)和T触发器的所有功能，读者可以尝试改变D触发器使其实现其他触发器的功能</p>
 <p>相关应用：74373（8位D型锁存器），基于D触发器的模8加法计数器（8分频器）</p>
 <hr>
-<h4 id="2-2-维持-阻塞D触发器"><a href="#2-2-维持-阻塞D触发器" class="headerlink" title="2.2. 维持-阻塞D触发器"></a>2.2. 维持-阻塞D触发器</h4><hr>
-<h4 id="3-1-JK触发器"><a href="#3-1-JK触发器" class="headerlink" title="3.1. JK触发器"></a>3.1. JK触发器</h4><p><img src="/images%5CFlipFlop%5CCLK_JK_FF.png" alt="JK触发器" title="JK触发器"></p>
+<h4 id="2-2-维持-阻塞D触发器">2.2. 维持-阻塞D触发器</h4>
+<hr>
+<h4 id="3-1-JK触发器">3.1. JK触发器</h4>
+<p><img src="images%5CFlipFlop%5CCLK_JK_FF.png" alt="JK触发器" title="JK触发器"></p>
 <p>JK触发器中，$G_{1}$,$G_{2}$构成基本触发器，$G_{3}$,$G_{4}$构成触发引导电路，$J,K$为信号输入端，无实际含义</p>
-<p>其直接输入为：<br>$$<br>{\overline{S_{D} } }&#x3D;{\overline{ {J{\overline{Q^{n} } } }{\cdot}CP} },<br>{\overline{R_{D} } }&#x3D;{\overline{KQ^{n}{\cdot}CP} }<br>$$<br>当$CP&#x3D;0$时，${\overline{S_{D}}}&#x3D;1$，${\overline{R_{D}}}&#x3D;1$，触发器状态维持不变</p>
-<p>当$CP&#x3D;1$时，JK触发器的特征方程为：<br>$$<br>\begin{cases}<br>Q^{n+1}&#x3D;J{\overline{Q^n} }+{\overline{K} }Q^{n}\<br>{\overline{S_{D} } }+{\overline{R_{D} } }&#x3D;<br>{\overline{ {J{\overline{Q^{n}} } } } }+{\overline{KQ^{n} } }&#x3D;1<br>\end{cases}<br>$$<br>其中约束条件${\overline{S_{D} } }+{\overline{R_{D} } }&#x3D;<br>{\overline{ {J{\overline{Q^{n} } } } } }+{\overline{KQ^{n} } }&#x3D;1$与$JK$变量的取值无关，即任何条件下均满足约束条件</p>
+<p>其直接输入为：<br>
+$$<br>
+{\overline{S_{D} } }={\overline{ {J{\overline{Q^{n} } } }{\cdot}CP} },<br>
+{\overline{R_{D} } }={\overline{KQ^{n}{\cdot}CP} }<br>
+$$<br>
+当$CP=0$时，${\overline{S_{D}}}=1$，${\overline{R_{D}}}=1$，触发器状态维持不变</p>
+<p>当$CP=1$时，JK触发器的特征方程为：<br>
+$$<br>
+\begin{cases}<br>
+Q^{n+1}=J{\overline{Q^n} }+{\overline{K} }Q^{n}\<br>
+{\overline{S_{D} } }+{\overline{R_{D} } }=<br>
+{\overline{ {J{\overline{Q^{n}} } } } }+{\overline{KQ^{n} } }=1<br>
+\end{cases}<br>
+$$<br>
+其中约束条件${\overline{S_{D} } }+{\overline{R_{D} } }=<br>
+{\overline{ {J{\overline{Q^{n} } } } } }+{\overline{KQ^{n} } }=1$与$JK$变量的取值无关，即任何条件下均满足约束条件</p>
 <p>给出JK触发器的状态转移真值表：</p>
 <table>
 <thead>
 <tr>
-<th align="center">$J$</th>
-<th align="center">$K$</th>
-<th align="center">$Q^{n+1}$</th>
+<th style="text-align:center">$J$</th>
+<th style="text-align:center">$K$</th>
+<th style="text-align:center">$Q^{n+1}$</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">$Q^{n}$</td>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">$Q^{n}$</td>
 </tr>
 <tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
 </tr>
 <tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
 </tr>
 <tr>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">$\overline{Q^{n}}$</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">$\overline{Q^{n}}$</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>JK触发器可以实现钟控RS触发器、D触发器和下文T触发器的所有功能，读者可以尝试改变JK触发器使其实现其他触发器的功能</p>
-<p>同时，JK触发器存在“空翻现象”，即当$CP&#x3D;1$时间较长，$J&#x3D;K&#x3D;1$时，由于$Q$和$\overline{Q}$反馈回与非门的时间不同，会导致出现竞争冒险，使得输出$Q$不断翻转，为了解决此问题，引入主从JK触发器</p>
+<p>同时，JK触发器存在“空翻现象”，即当$CP=1$时间较长，$J=K=1$时，由于$Q$和$\overline{Q}$反馈回与非门的时间不同，会导致出现竞争冒险，使得输出$Q$不断翻转，为了解决此问题，引入主从JK触发器</p>
 <hr>
-<h4 id="3-2-主从JK触发器"><a href="#3-2-主从JK触发器" class="headerlink" title="3.2. 主从JK触发器"></a>3.2. 主从JK触发器</h4><p><img src="/images%5CFlipFlop%5CMS_JK_FF.png" alt="主从JK触发器" title="主从JK触发器"></p>
+<h4 id="3-2-主从JK触发器">3.2. 主从JK触发器</h4>
+<p><img src="images%5CFlipFlop%5CMS_JK_FF.png" alt="主从JK触发器" title="主从JK触发器"></p>
 <hr>
-<h4 id="3-3-下降沿JK触发器"><a href="#3-3-下降沿JK触发器" class="headerlink" title="3.3. 下降沿JK触发器"></a>3.3. 下降沿JK触发器</h4><p><img src="/images%5CFlipFlop%5CCLK_D_JK_FF.png" alt="下降沿JK触发器" title="下降沿JK触发器"></p>
+<h4 id="3-3-下降沿JK触发器">3.3. 下降沿JK触发器</h4>
+<p><img src="images%5CFlipFlop%5CCLK_D_JK_FF.png" alt="下降沿JK触发器" title="下降沿JK触发器"></p>
 <hr>
-<h4 id="4-钟控T触发器"><a href="#4-钟控T触发器" class="headerlink" title="4.钟控T触发器"></a>4.钟控T触发器</h4><hr>
-<h4 id="5-COMS触发器"><a href="#5-COMS触发器" class="headerlink" title="5. COMS触发器"></a>5. COMS触发器</h4>
+<h4 id="4-钟控T触发器">4.钟控T触发器</h4>
+<hr>
+<h4 id="5-COMS触发器">5. COMS触发器</h4>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/26/%E5%B8%A6%E9%80%9A%E6%BB%A4%E6%B3%A2%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liu-bit264">
+      <meta itemprop="description" content="Here’s A Nobody">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu-bit264">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/11/26/%E5%B8%A6%E9%80%9A%E6%BB%A4%E6%B3%A2%E5%99%A8/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-11-26 17:09:58 / 修改时间：17:36:15" itemprop="dateCreated datePublished" datetime="2025-11-26T17:09:58+08:00">2025-11-26</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>155</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1>带通滤波器</h1>
+<hr>
+<h4 id="一、传递函数">一、传递函数</h4>
+<h5 id="1-标准形式传递函数">1.标准形式传递函数</h5>
+<p>$$<br>
+H(s)={\frac{Y(s)}{U(s)} }={\frac{({\frac{ { {\omega}<em>{0} } } {Q} } {\times}{s})} {({s^2} {+}{ {\frac{{\omega}</em>{0} } {Q} }s}{+}{ {\omega}_{0}^{2} }) } }<br>
+$$</p>
+<h5 id="2-通用形式传递函数">2.通用形式传递函数</h5>
+<p>$$<br>
+H(s)={\frac{Y(s)} {U(s)} }={\frac{({b_{1} } {s})} {(s^{2}+a_{1}s+a_{0}) } }<br>
+$$</p>
+<h5 id="3-参数说明">3.参数说明</h5>
+<p>·	<code>s</code>:拉普拉斯变量</p>
+<p>·	<code>Y(s)</code>:输出信号的拉普拉斯变换</p>
+<p>·	<code>U(s)</code>:输入信号的拉普拉斯变换</p>
+<p>·	<code>ω₀</code>:滤波器中心频率，其中${ {\omega}=2{\pi}f}$</p>
+<p>·	<code>Q</code>:品质因数，决定滤波器带宽</p>
+<p>​		对应关系:	$a_{1}={\frac{ {\omega}<em>{0} } {Q} }$,$a</em>{0}={\omega}<em>{0}^{2}$,${b_1}={\frac{ {\omega}</em>{0} }{Q} }$</p>
+<p>​</p>
+
       
     </div>
 
@@ -521,7 +582,7 @@ mjx-container[display="true"] + br {
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-11-26 17:09:58 / 修改时间：17:32:39" itemprop="dateCreated datePublished" datetime="2025-11-26T17:09:58+08:00">2025-11-26</time>
+              <time title="创建时间：2025-11-26 17:09:58 / 修改时间：17:50:11" itemprop="dateCreated datePublished" datetime="2025-11-26T17:09:58+08:00">2025-11-26</time>
             </span>
 
           <br>
@@ -530,7 +591,7 @@ mjx-container[display="true"] + br {
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>221</span>
+              <span>219</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -550,27 +611,33 @@ mjx-container[display="true"] + br {
 
       
           <hr>
-<h3 id="一、可导性"><a href="#一、可导性" class="headerlink" title="一、可导性"></a>一、可导性</h3><p>​		可导性的证明要用定义来证明，只有对于该点有定义的函数，其导函数在该点才可能有定义</p>
-<p>​		例如，对于函数<br>$$<br>f(x) &#x3D;<br>\begin{cases}<br>x^2sin{\frac{1}{x}}, &amp; x \neq 0 \\<br>0, &amp; x &#x3D; 0<br>\end{cases}<br>$$<br>​		由于其在$x&#x3D;0$处无定义，故不可以求导来证明左右导数是否相等</p>
-<h3 id="二、经典反函数的求导"><a href="#二、经典反函数的求导" class="headerlink" title="二、经典反函数的求导"></a>二、经典反函数的求导</h3><p>​		我们通过反三角函数的求导来说明反函数的求导</p>
-<p>​		对于反函数$y&#x3D;arcsinx$我们对其求导<br>$$<br>y^{<code>&#125;=\frac&#123;1&#125;&#123;&#123;siny&#125;^&#123;</code>}}&#x3D;\frac{1}{cosy}<br>$$<br>​		又：<br>$$<br>cosy&#x3D;{\sqrt{1-sin^{2}y}&#x3D;{\sqrt{1-x^{2}}}}<br>$$</p>
-<p>​		则：<br>$$<br>(arcsin)^{&#96;}&#x3D;{\frac{1}{ {\sqrt{1-x^{2} } } } }<br>$$</p>
-
-
-##### 			提问：为什么不可以写成$y^{'}={\frac{1}{x^{'} } }$
-
-##### 	答：此处$y=arcsinx$,$x=siny$,两式互为反函数，这样的表述方式只是重述了定理${\frac{{\mathrm{d}y} }{ {\mathrm{d}x} } }={\frac{1}{\frac{ {\mathrm{d}x} }{ {\mathrm{d}y} } } }$
-
-
-
-
-
-
-
-
-
-
-
+<h3 id="一、可导性">一、可导性</h3>
+<p>​		可导性的证明要用定义来证明，只有对于该点有定义的函数，其导函数在该点才可能有定义</p>
+<p>​		例如，对于函数<br>
+$$<br>
+f(x) =<br>
+\begin{cases}<br>
+x^2sin{\frac{1} {x} }, &amp; x \neq 0 \\<br>
+0, &amp; x = 0<br>
+\end{cases}<br>
+$$<br>
+​		由于其在$x=0$处无定义，故不可以求导来证明左右导数是否相等</p>
+<h3 id="二、经典反函数的求导">二、经典反函数的求导</h3>
+<p>​		我们通过反三角函数的求导来说明反函数的求导</p>
+<p>​		对于反函数$y=arcsinx$我们对其求导<br>
+$$<br>
+y^{<code>}=\frac{1} { {siny} ^ {</code>} }=\frac{1} {cosy}<br>
+$$<br>
+​		又：<br>
+$$<br>
+cosy={\sqrt{1-sin^{2}y}={\sqrt{1-x^{2} } } }<br>
+$$</p>
+<p>​		则：<br>
+$$<br>
+(arcsin)^{`}={\frac{1}{ {\sqrt{1-x^{2} } } } }<br>
+$$</p>
+<h5 id="提问：为什么不可以写成-y-’-frac-1-x-’">提问：为什么不可以写成$y^ { ’ }= {\frac { 1 } {  x ^ {’ } } }$</h5>
+<h5 id="答：此处-y-arcsinx-x-siny-两式互为反函数，这样的表述方式只是重述了定理-frac-mathrm-d-y-mathrm-d-x-frac-1-frac-mathrm-d-x-mathrm-d-y">答：此处$y=arcsinx$,$x=siny$,两式互为反函数，这样的表述方式只是重述了定理${\frac{ {\mathrm{d}y} } { {\mathrm{d}x} } }={\frac{1} {\frac{ {\mathrm{d}x} } { {\mathrm{d}y} } } }$</h5>
 
       
     </div>

@@ -23,27 +23,27 @@
   <meta name="description" content="Here’s A Nobody">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Liu-bit264">
-<meta property="og:url" content="http://example.com/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/index.html">
+<meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="Liu-bit264">
 <meta property="og:description" content="Here’s A Nobody">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Liu-bit264">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/">
+<link rel="canonical" href="http://example.com/page/2/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
+    isHome : true,
     isPost : false,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>分类: 碎碎念 | Liu-bit264</title>
+  <title>Liu-bit264</title>
   
 
 
@@ -157,52 +157,126 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/04/Math_Note_251104/">
 
-  
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">碎碎念
-          <small>分类</small>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liu-bit264">
+      <meta itemprop="description" content="Here’s A Nobody">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu-bit264">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/11/04/Math_Note_251104/" class="post-title-link" itemprop="url">1104第一次测试错题</a>
         </h2>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-11-04 00:00:00" itemprop="dateCreated datePublished" datetime="2025-11-04T00:00:00+08:00">2025-11-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-11-26 16:53:43" itemprop="dateModified" datetime="2025-11-26T16:53:43+08:00">2025-11-26</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>213</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2025</span>
+          <hr>
+<h3 id="函数连续性问题">函数连续性问题</h3>
+<p>对于连续函数$f(x)$和$g(x)$的和$F(x)=f(x)+g(x)$,$F(x)$必定不连续</p>
+<p>因为，假定$F(x)$连续，则有：</p>
+<p>$$<br>
+g(x)=F(x)-f(x)<br>
+$$</p>
+<p>则与题意矛盾，必不成立</p>
+<hr>
+<h3 id="关于间断点">关于间断点</h3>
+<p>我们以一个例题来讲明白间断点</p>
+<blockquote>
+<p><code>点x=1是函数</code>$y=\frac{x-1}{x^2+2x-3}sin\frac{1}{x}$<code>的(    )</code></p>
+</blockquote>
+<blockquote>
+<p>A、可去间断点</p>
+</blockquote>
+<blockquote>
+<p>B、跳跃间断点</p>
+</blockquote>
+<blockquote>
+<p>C、无穷间断点</p>
+</blockquote>
+<blockquote>
+<p>D、震荡间断点</p>
+</blockquote>
+<p>我们对原式化简，得到：</p>
+<p>$$<br>
+y=\frac{1}{x+3}<br>
+$$</p>
+<p>$(x-1)$上下可消去，则$x=1$为函数的可去间断点</p>
+<p>$(x+3)$上下不可消去，且$x\rightarrow3$时$y\neq0$，则$x=-3$为函数的无穷间断点</p>
+<p>当$x\rightarrow0$时，$\frac{1}{x}{\rightarrow}{\infty}$，此时$sin\frac{1}{x}$震荡，故$x=0$为函数的震荡间断点</p>
+<hr>
+<h4 id="Writen-at-11-04">Writen at 11/04</h4>
+
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2025-11-25T23:30:00+08:00"
-              content="2025-11-25">
-          11-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2025/11/25/20251125-%E7%A2%8E%E7%A2%8E%E5%BF%B5%E5%85%B6%E4%B8%80/" itemprop="url">
-            <span itemprop="name">碎碎念其一</span>
-          </a>
-      </div>
-
-    </header>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
-
-    </div>
-  </div>
   
   
   
 
+
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
 
 

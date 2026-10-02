@@ -1,6 +1,8 @@
 import { app, BrowserWindow, ipcMain, dialog, shell } from "electron";
 import { join, dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { appendFileSync } from "node:fs";
 import {
   scanDirectory,
   deployPosts,
@@ -12,6 +14,21 @@ import {
   slugify,
   pathExists,
 } from "./core.mjs";
+
+// ESM 主进程没有 __dirname，手动推导（打包后位于 app.asar 内）
+const APP_DIR = dirname(fileURLToPath(import.meta.url));
+
+// 未捕获异常写入日志，避免窗口静默创建失败
+process.on("uncaughtException", (err) => {
+  try {
+    appendFileSync(
+      join(app.getPath("userData"), "error.log"),
+      `${new Date().toISOString()}\n${err.stack || err}\n\n`,
+    );
+  } catch {
+    /* 忽略日志失败 */
+  }
+});
 
 const DEFAULT_REPO = "E:\\Repositories\\Liu-bit264.github.io";
 const GH_REPO = "Liu-bit264/Liu-bit264.github.io";
@@ -121,7 +138,7 @@ function createWindow() {
     height: 920,
     backgroundColor: "#18181b",
     webPreferences: {
-      preload: join(__dirname, "preload.cjs"),
+      preload: join(APP_DIR, "preload.cjs"),
       contextIsolation: true,
       nodeIntegration: false,
     },
@@ -130,7 +147,7 @@ function createWindow() {
     if (/^https?:/i.test(url)) shell.openExternal(url);
     return { action: "deny" };
   });
-  mainWindow.loadFile(join(__dirname, "index.html"));
+  mainWindow.loadFile(join(APP_DIR, "index.html"));
 }
 
 app.whenReady().then(createWindow);

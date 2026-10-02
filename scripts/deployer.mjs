@@ -14,12 +14,7 @@
 import { createServer } from "node:http";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import {
-  mkdir,
-  writeFile,
-  readFile,
-  access,
-} from "node:fs/promises";
+import { mkdir, writeFile, readFile, access } from "node:fs/promises";
 import { dirname, join, resolve, basename, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -59,7 +54,12 @@ function parseFrontmatter(md) {
   let curKey = null;
   for (const line of m[1].split(/\r?\n/)) {
     if (/^\s+-\s+/.test(line) && curKey) {
-      (fm[curKey] ??= []).push(line.replace(/^\s+-\s+/, "").replace(/^["']|["']$/g, "").trim());
+      (fm[curKey] ??= []).push(
+        line
+          .replace(/^\s+-\s+/, "")
+          .replace(/^["']|["']$/g, "")
+          .trim(),
+      );
       continue;
     }
     const kv = line.match(/^([A-Za-z_][\w-]*):\s*(.*)$/);
@@ -74,7 +74,9 @@ function parseFrontmatter(md) {
 }
 
 function buildFrontmatter(fm, body, filename) {
-  const title = fm.title || (body.match(/^#\s+(.+)$/m) || [])[1]?.trim() ||
+  const title =
+    fm.title ||
+    (body.match(/^#\s+(.+)$/m) || [])[1]?.trim() ||
     filename.replace(/\.(md|markdown|mdx)$/i, "");
   const pubDatetime = fm.pubDatetime || nowIsoShanghai();
   let description = fm.description || "";
@@ -157,11 +159,16 @@ async function waitForWorkflow(sha, maxMs = 8 * 60 * 1000) {
       const { stdout } = await run(
         "gh",
         [
-          "run", "list",
-          "--repo", "Liu-bit264/Liu-bit264.github.io",
-          "--workflow", WORKFLOW,
-          "--limit", "5",
-          "--json", "headSha,status,conclusion,url,displayTitle",
+          "run",
+          "list",
+          "--repo",
+          "Liu-bit264/Liu-bit264.github.io",
+          "--workflow",
+          WORKFLOW,
+          "--limit",
+          "5",
+          "--json",
+          "headSha,status,conclusion,url,displayTitle",
         ],
         { timeout: 30000 },
       );
@@ -204,7 +211,11 @@ async function handleDeploy(body, res) {
       const md = String(p.md || "");
       if (!md.trim()) return json(res, 400, { error: "文章内容为空" });
       const { fm, body: rawBody } = parseFrontmatter(md);
-      const { frontmatter, title } = buildFrontmatter(fm, rawBody, slug + ".md");
+      const { frontmatter, title } = buildFrontmatter(
+        fm,
+        rawBody,
+        slug + ".md",
+      );
       // 写图片，并把正文中的原始引用改写为站点根路径
       let body = rawBody;
       for (const img of Array.isArray(p.images) ? p.images : []) {
@@ -220,12 +231,19 @@ async function handleDeploy(body, res) {
           const esc = String(img.ref).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
           body = body
             .replace(new RegExp(`\\]\\(\\s*${esc}\\s*`, "g"), `](${sitePath}`)
-            .replace(new RegExp(`src=["']${esc}["']`, "g"), `src="${sitePath}"`);
+            .replace(
+              new RegExp(`src=["']${esc}["']`, "g"),
+              `src="${sitePath}"`,
+            );
         }
       }
       const file = join(POSTS_DIR, `${slug}.md`);
       await mkdir(POSTS_DIR, { recursive: true });
-      await writeFile(file, frontmatter + "\n" + body.replace(/^\s+/, ""), "utf8");
+      await writeFile(
+        file,
+        frontmatter + "\n" + body.replace(/^\s+/, ""),
+        "utf8",
+      );
       titles.push(title);
       slugs.push(slug);
     }
@@ -233,7 +251,11 @@ async function handleDeploy(body, res) {
     if (!result.pushed) {
       return json(res, 200, { ...result, posts: slugs });
     }
-    json(res, 200, { ...result, posts: slugs, liveUrl: "https://liu-bit264.github.io/" });
+    json(res, 200, {
+      ...result,
+      posts: slugs,
+      liveUrl: "https://liu-bit264.github.io/",
+    });
   } catch (err) {
     json(res, 500, { error: String(err.message || err) });
   }
@@ -437,7 +459,8 @@ const server = createServer(async (req, res) => {
     const chunks = [];
     for await (const c of req) {
       size += c.length;
-      if (size > MAX_BODY) return json(res, 413, { error: "payload too large" });
+      if (size > MAX_BODY)
+        return json(res, 413, { error: "payload too large" });
       chunks.push(c);
     }
     try {
@@ -450,7 +473,10 @@ const server = createServer(async (req, res) => {
   if (req.method === "POST" && req.url === "/api/wait") {
     let size = 0;
     const chunks = [];
-    for await (const c of req) { size += c.length; chunks.push(c); }
+    for await (const c of req) {
+      size += c.length;
+      chunks.push(c);
+    }
     try {
       const { sha } = JSON.parse(Buffer.concat(chunks).toString("utf8"));
       const r = await waitForWorkflow(sha);

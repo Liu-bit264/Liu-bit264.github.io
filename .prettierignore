@@ -1,0 +1,8 @@
+# 构建产物与依赖不参与格式检查
+node_modules/
+dist/
+.astro/
+public/
+deployer-app/release/
+deployer-app/node_modules/
+pnpm-lock.yaml

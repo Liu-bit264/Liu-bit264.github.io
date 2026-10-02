@@ -42,7 +42,10 @@ export function parseFrontmatter(md) {
   for (const line of m[1].split(/\r?\n/)) {
     if (/^\s+-\s+/.test(line) && curKey) {
       (fm[curKey] ??= []).push(
-        line.replace(/^\s+-\s+/, "").replace(/^["']|["']$/g, "").trim(),
+        line
+          .replace(/^\s+-\s+/, "")
+          .replace(/^["']|["']$/g, "")
+          .trim(),
       );
       continue;
     }
@@ -199,7 +202,11 @@ export async function deployPosts(repoRoot, selected, io) {
     const slug = slugify(rel.split("/").pop());
     const md = await readFile(join(dir, rel), "utf8");
     const { fm, body } = parseFrontmatter(md);
-    const { frontmatter, title } = buildFrontmatter(fm, body, rel.split("/").pop());
+    const { frontmatter, title } = buildFrontmatter(
+      fm,
+      body,
+      rel.split("/").pop(),
+    );
     let out = body;
     const mdDir = rel.includes("/") ? rel.slice(0, rel.lastIndexOf("/")) : "";
     let copied = 0;
@@ -223,7 +230,10 @@ export async function deployPosts(repoRoot, selected, io) {
       const esc = ref.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       // (?=\)) 只吞左括号内的内容，保留原有的右括号，避免出现双括号
       out = out
-        .replace(new RegExp(`\\]\\(\\s*${esc}\\s*(?=\\))`, "g"), `](${sitePath}`)
+        .replace(
+          new RegExp(`\\]\\(\\s*${esc}\\s*(?=\\))`, "g"),
+          `](${sitePath}`,
+        )
         .replace(new RegExp(`src=["']${esc}["']`, "g"), `src="${sitePath}"`);
       copied++;
       io?.log?.(`  ✓ ${ref} → ${sitePath}`);
@@ -234,7 +244,9 @@ export async function deployPosts(repoRoot, selected, io) {
     await writeFile(file, frontmatter + "\n" + out.replace(/^\s+/, ""), "utf8");
     titles.push(title);
     slugs.push(slug);
-    io?.log?.(`✓ ${title}（图片 ${copied} 张${missing ? `，缺失 ${missing} 张` : ""}）`);
+    io?.log?.(
+      `✓ ${title}（图片 ${copied} 张${missing ? `，缺失 ${missing} 张` : ""}）`,
+    );
   }
 
   await run("git", ["add", "-A"], { execOpts: { cwd: repoRoot } });
@@ -264,15 +276,22 @@ export async function waitForWorkflow(sha, repo, maxMs = 8 * 60 * 1000) {
       const { stdout } = await run(
         "gh",
         [
-          "run", "list",
-          "--repo", repo,
-          "--workflow", "deploy-pages.yml",
-          "--limit", "5",
-          "--json", "headSha,status,conclusion,url",
+          "run",
+          "list",
+          "--repo",
+          repo,
+          "--workflow",
+          "deploy-pages.yml",
+          "--limit",
+          "5",
+          "--json",
+          "headSha,status,conclusion,url",
         ],
         { timeout: 30000 },
       );
-      const mine = (JSON.parse(stdout || "[]") || []).find((r) => r.headSha === sha);
+      const mine = (JSON.parse(stdout || "[]") || []).find(
+        (r) => r.headSha === sha,
+      );
       if (mine) {
         if (mine.status === "completed") {
           return {

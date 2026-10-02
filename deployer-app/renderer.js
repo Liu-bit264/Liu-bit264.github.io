@@ -32,7 +32,8 @@ $("pick").onclick = async () => {
   if (!r) return;
   dir = r.dir;
   mdFiles = r.mdFiles;
-  $("dirname").textContent = `（${dir}，扫描到 ${mdFiles.length} 篇 .md、${r.fileCount} 个文件）`;
+  $("dirname").textContent =
+    `（${dir}，扫描到 ${mdFiles.length} 篇 .md、${r.fileCount} 个文件）`;
   renderList();
   parsed = await window.deployer.parsePosts({ dir, rels: mdFiles });
   renderInfo();
@@ -68,7 +69,9 @@ $("deploy").onclick = async () => {
   btn.disabled = true;
   logEl.textContent = "";
   $("result").textContent = "";
-  const rels = mdFiles.filter((_, i) => document.querySelector(`input[data-i="${i}"]`)?.checked);
+  const rels = mdFiles.filter(
+    (_, i) => document.querySelector(`input[data-i="${i}"]`)?.checked,
+  );
   if (!rels.length) {
     log("未选择文章");
     btn.disabled = false;
@@ -82,14 +85,19 @@ $("deploy").onclick = async () => {
       btn.disabled = false;
       return;
     }
-    log(`已提交 ${d.sha.slice(0, 7)} 并推送，等待 Actions 构建部署…（最长约 8 分钟）`);
+    log(
+      `已提交 ${d.sha.slice(0, 7)} 并推送，等待 Actions 构建部署…（最长约 8 分钟）`,
+    );
     const w = await window.deployer.waitDeploy({ sha: d.sha });
     if (w.done && w.ok) {
-      $("result").innerHTML = `✅ 部署成功！<a href="${state.liveUrl}">打开博客</a> · <a href="${w.url}">构建记录</a>`;
+      $("result").innerHTML =
+        `✅ 部署成功！<a href="${state.liveUrl}">打开博客</a> · <a href="${w.url}">构建记录</a>`;
     } else if (w.done) {
-      $("result").innerHTML = `❌ 构建失败（${w.conclusion}），<a href="${w.url}">查看日志</a>`;
+      $("result").innerHTML =
+        `❌ 构建失败（${w.conclusion}），<a href="${w.url}">查看日志</a>`;
     } else {
-      $("result").innerHTML = `⏳ 仍在构建，稍后查看：<a href="${state.repoUrl}/actions">Actions</a>`;
+      $("result").innerHTML =
+        `⏳ 仍在构建，稍后查看：<a href="${state.repoUrl}/actions">Actions</a>`;
     }
   } catch (e) {
     log("部署失败：" + (e?.message || e));

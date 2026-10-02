@@ -79,7 +79,11 @@ ipc("parse-posts", async ({ dir, rels }) => {
   for (const rel of rels) {
     const md = await readFile(join(dir, rel), "utf8");
     const { fm, body } = parseFrontmatter(md);
-    const { title, description } = buildFrontmatter(fm, body, rel.split("/").pop());
+    const { title, description } = buildFrontmatter(
+      fm,
+      body,
+      rel.split("/").pop(),
+    );
     const mdDir = rel.includes("/") ? rel.slice(0, rel.lastIndexOf("/")) : "";
     const images = findImageRefs(md).map((ref) => ({
       ref,
@@ -103,11 +107,7 @@ ipc("deploy", async ({ dir, rels }) => {
   const io = {
     log: (line) => mainWindow?.webContents.send("deploy-log", line),
   };
-  const result = await deployPosts(
-    repoRoot,
-    { dir, rels },
-    io,
-  );
+  const result = await deployPosts(repoRoot, { dir, rels }, io);
   return result;
 });
 

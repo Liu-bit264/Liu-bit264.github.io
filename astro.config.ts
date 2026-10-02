@@ -80,7 +80,9 @@ const siteUrl = ciSiteUrl || config.site?.url;
 const baseUrl = ciBaseUrl || undefined;
 
 // 动态 OG 图字体：仅构建期供 satori 取用；关闭动态 OG 图时不注册字体，
-// 构建即不再访问任何字体 CDN
+// 构建即不再访问任何字体 CDN。
+// any[] 用于兼容空数组状态下 Astro 收窄的生成字体类型
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ogFonts: any[] =
   config.features?.dynamicOgImage === false
     ? []
@@ -141,7 +143,6 @@ export default defineConfig({
   },
   // 动态 OG 图使用的字体：仅构建期供 satori 取用，不注入站点 CSS。
   // 关闭动态 OG 图时跳过字体注册，避免构建期访问字体 CDN
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- 空数组状态下 Astro 生成的字体类型会收窄为 []，any[] 才能同时通过两种状态的类型检查
   fonts: ogFonts,
   env: {
     schema: {

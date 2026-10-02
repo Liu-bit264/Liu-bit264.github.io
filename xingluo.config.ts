@@ -129,9 +129,7 @@ export default defineXingluoConfig({
   // 社交链接：显示在首页社交区与页脚。
   // name 对应 src/assets/icons/socials/ 下的图标文件名（不含 .astro），
   // 内置支持：github / x / mail / facebook / telegram / weibo 等。
-  socials: [
-    { name: "github", url: "https://github.com/Liu-bit264" },
-  ],
+  socials: [{ name: "github", url: "https://github.com/Liu-bit264" }],
   // 分享链接：文章详情页"分享这篇文章"区域展示的按钮
   // name 对应 src/assets/icons/socials/ 下的图标文件名（不含 .astro）
   // url 为分享目标的基础链接，实际分享时会自动拼接当前文章 URL

@@ -48,7 +48,7 @@ function yamlEscape(s) {
 
 function nowIsoShanghai() {
   const d = new Date(Date.now() + 8 * 3600 * 1000);
-  return d.toISOString().replace("Z", "+08:00");
+  return d.toISOString().replace(/\.\d+Z/, "+08:00");
 }
 
 /** 解析现有 frontmatter（够用即可，不做完整 YAML） */
@@ -205,7 +205,8 @@ async function handleDeploy(body, res) {
       if (!md.trim()) return json(res, 400, { error: "文章内容为空" });
       const { fm, body: rawBody } = parseFrontmatter(md);
       const { frontmatter, title } = buildFrontmatter(fm, rawBody, slug + ".md");
-      // 写图片
+      // 写图片，并把正文中的原始引用改写为站点根路径
+      let body = rawBody;
       for (const img of Array.isArray(p.images) ? p.images : []) {
         const target = safeSlug(String(img.target || ""));
         if (!target) throw new Error(`非法图片路径: ${img.target}`);
@@ -214,10 +215,17 @@ async function handleDeploy(body, res) {
         if (!dest.startsWith(IMAGES_DIR)) throw new Error("图片路径越界");
         await mkdir(dirname(dest), { recursive: true });
         await writeFile(dest, buf);
+        if (img.ref) {
+          const sitePath = `/images/${slug}/${target}`;
+          const esc = String(img.ref).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          body = body
+            .replace(new RegExp(`\\]\\(\\s*${esc}\\s*`, "g"), `](${sitePath}`)
+            .replace(new RegExp(`src=["']${esc}["']`, "g"), `src="${sitePath}"`);
+        }
       }
       const file = join(POSTS_DIR, `${slug}.md`);
       await mkdir(POSTS_DIR, { recursive: true });
-      await writeFile(file, frontmatter + "\n" + rawBody.replace(/^\s+/, "") , "utf8");
+      await writeFile(file, frontmatter + "\n" + body.replace(/^\s+/, ""), "utf8");
       titles.push(title);
       slugs.push(slug);
     }
@@ -322,7 +330,7 @@ async function parsePost(item) {
     const rel = normalizeRef(raw, mdDir);
     let hit = dirFiles.get(rel) || findRefByName(rel.split('/').pop());
     if (!hit) { status.push({ ref: raw, ok: false, note: '未在所选文件夹中找到' }); continue; }
-    images.push({ name: hit.rel, b64: await readB64(hit.h) });
+    images.push({ ref: raw, name: hit.rel, b64: await readB64(hit.h) });
     status.push({ ref: raw, ok: true, note: hit.rel });
   }
   const fmMatch = md.match(/^---\\r?\\n([\\s\\S]*?)\\r?\\n---/);
@@ -385,7 +393,7 @@ document.getElementById('deploy').onclick = async () => {
   const payload = { posts: chosen.map(p => ({
     slug: p.item.rel.split('/').pop().replace(/\\.(md|markdown)$/i, ''),
     md: p.md,
-    images: p.images.map(im => ({ target: im.name.split('/').pop(), b64: im.b64 })),
+    images: p.images.map(im => ({ target: im.name.split('/').pop(), ref: im.ref, b64: im.b64 })),
   }))};
   try {
     const r = await fetch('/api/deploy', { method: 'POST',

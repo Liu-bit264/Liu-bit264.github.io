@@ -12,6 +12,7 @@
     "dev": "astro dev",
     "build": "astro check && astro build && node scripts/generateSearchIndex.mjs && node scripts/cleanOrphanAssets.mjs",
     "preview": "astro preview",
+    "deploy": "node scripts/deployer.mjs",
     "sync": "astro sync",
     "astro": "astro",
     "format:check": "prettier --check .",

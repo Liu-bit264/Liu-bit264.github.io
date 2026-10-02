@@ -1,0 +1,44 @@
+{
+  "name": "blog-deployer",
+  "version": "1.0.0",
+  "description": "Liu-bit264 博客文章部署器（Electron 桌面版）",
+  "type": "module",
+  "main": "main.mjs",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable --x64"
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "io.github.liubit264.blog-deployer",
+    "productName": "BlogDeployer",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.mjs",
+      "preload.cjs",
+      "renderer.js",
+      "index.html",
+      "core.mjs",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "portable": {
+      "artifactName": "BlogDeployer-Portable.exe"
+    }
+  }
+}

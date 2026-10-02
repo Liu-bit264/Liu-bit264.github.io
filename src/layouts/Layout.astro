@@ -1,0 +1,166 @@
+---
+import { ClientRouter } from "astro:transitions";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { resolveDefaultOgImagePath } from "@/utils/resolveDefaultOgImagePath";
+import { getAssetPath, stripBase } from "@/utils/withBase";
+import Favicon from "@/components/Favicon.astro";
+import { LOCALES, DEFAULT_LOCALE } from "@/i18n";
+import { parseLocaleFromPath } from "@/i18n/routing";
+import config from "@/config";
+import "@/styles/global.css";
+import "katex/dist/katex.min.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalURL?: string;
+}
+
+const { site } = config;
+
+const {
+  title = site.title,
+  description = site.description,
+  ogImage = resolveDefaultOgImagePath(),
+  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
+} = Astro.props;
+
+const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
+const currentLocale = Astro.currentLocale ?? site.lang;
+const rssHref = getRelativeLocaleUrl(currentLocale, "rss.xml");
+
+/**
+ * 计算当前页面各语言版本的 URL，用于 hreflang alternate 链接。
+ * 默认语言无前缀，其他语言带前缀；路径保持一致。
+ */
+const { path: localeAgnosticPath } = parseLocaleFromPath(
+  stripBase(Astro.url.pathname)
+);
+const normalizedPath =
+  localeAgnosticPath === "/" || localeAgnosticPath === ""
+    ? undefined
+    : localeAgnosticPath.replace(/^\/+|\/+$/g, "") || undefined;
+const alternateLinks = LOCALES.map((target) => ({
+  hreflang: target,
+  href: new URL(
+    getRelativeLocaleUrl(target, normalizedPath),
+    Astro.site
+  ).href,
+}));
+// x-default 指向默认语言版本，供未匹配语言的用户入口
+const defaultAlternate = {
+  hreflang: "x-default",
+  href: new URL(
+    getRelativeLocaleUrl(DEFAULT_LOCALE, normalizedPath),
+    Astro.site
+  ).href,
+};
+---
+
+<!doctype html>
+<html
+  dir={site.dir}
+  lang={Astro.currentLocale ?? site.lang}
+  class="overflow-y-scroll scroll-smooth"
+  data-animations={JSON.stringify(config.features.animations)}
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Favicon favicon={site.favicon!} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- 主要 meta -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content={site.author} />
+    <link rel="sitemap" href={getAssetPath("sitemap-index.xml")} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={socialImageURL} />
+
+    <!-- Twitter / X -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImageURL} />
+
+    <!-- RSS 自动发现 -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={site.title}
+      href={new URL(rssHref, Astro.site)}
+    />
+
+    <!-- hreflang 多语言版本声明，供搜索引擎理解各语言对应关系 -->
+    {
+      alternateLinks.map(({ hreflang, href }) => (
+        <link rel="alternate" hreflang={hreflang} href={href} />
+      ))
+    }
+    <link rel="alternate" hreflang={defaultAlternate.hreflang} href={defaultAlternate.href} />
+
+    <!-- 运行时由 theme.ts 填充为当前背景色 -->
+    <meta name="theme-color" content="" />
+
+    <!-- 子布局注入的额外 head 内容（如 JSON-LD、文章 meta） -->
+    <slot name="head" />
+
+    {
+      site.googleVerification && (
+        <meta name="google-site-verification" content={site.googleVerification} />
+      )
+    }
+
+    <!--
+      内联 FOUC 防护脚本：在浏览器绘制前设置 <html> 的 data-theme
+      同步执行，无 defer/async
+    -->
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const theme = stored ?? (prefersDark ? "dark" : "light");
+        const root = document.firstElementChild;
+        root?.setAttribute("data-theme", theme);
+        root?.classList.toggle("dark", theme === "dark");
+        window.__theme = { value: theme };
+      })();
+    </script>
+
+    <!-- 将动画配置序列化为 JSON 嵌入 data 属性，供客户端脚本读取 -->
+    <ClientRouter />
+  </head>
+  <body
+    class="bg-background text-foreground app-layout"
+    data-animations-toc={config.features.animations.tocSmooth}
+    data-animations-theme={config.features.animations.themeTransition}
+  >
+    <slot />
+    <script>
+      import "@/scripts/theme";
+    </script>
+    {
+      /* 动画模块入口 */
+      (config.features.animations.spotlightCard ||
+        config.features.animations.scrollReveal ||
+        config.features.animations.navIndicator) && (
+        <script>
+          import "@/scripts/animations";
+        </script>
+      )
+    }
+  </body>
+</html>

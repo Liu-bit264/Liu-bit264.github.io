@@ -1,0 +1,113 @@
+/**
+ * 文章正文 prose 排版样式
+ * 基于 @tailwindcss/typography，覆盖为星罗主题配色
+ */
+
+/* prose 容器：在 .app-prose 上应用文章排版 */
+.app-prose {
+  @apply prose prose-neutral dark:prose-invert max-w-none;
+  /* 标题使用前景色（黑色），更醒目 */
+  @apply prose-headings:text-foreground prose-headings:scroll-mt-20 prose-headings:font-semibold;
+  /* 链接使用主色 */
+  @apply prose-a:font-medium prose-a:text-primary prose-a:underline-offset-4 hover:prose-a:text-primary/80;
+  /* 代码块使用 code 表面色 */
+  @apply prose-code:rounded prose-code:bg-code prose-code:px-1.5 prose-code:py-0.5 prose-code:text-code-foreground prose-code:before:content-none prose-code:after:content-none;
+  /* 预格式化代码块去除内联代码背景 */
+  @apply prose-pre:bg-code prose-pre:text-code-foreground prose-pre:p-0;
+  /* 引用块强调 */
+  @apply prose-blockquote:border-l-primary/40 prose-blockquote:not-italic prose-blockquote:text-muted-foreground;
+  /* 水平线弱化 */
+  @apply prose-hr:border-border;
+  /* 图片圆角 */
+  @apply prose-img:rounded-lg;
+}
+
+/* 代码块容器：pre 保持 overflow:visible，避免裁切 header；
+   背景/边框由 Shiki 主题变量驱动，padding 下放到 code 子元素 */
+.app-prose .astro-code {
+  @apply rounded-lg border border-border;
+  background-color: var(--shiki-light-bg);
+  /* Shiki 在 wrap:false 时会向 pre 内联写入 overflow-x:auto，此处强制覆盖，
+     让 header（pre 内首子节点）不被裁切，横向滚动交由 code 承担 */
+  overflow: visible !important;
+}
+
+/* 暗色代码块切换为暗色 Shiki 主题背景 */
+.dark .app-prose .astro-code {
+  background-color: var(--shiki-dark-bg);
+}
+
+/* 代码区：承担横向滚动与内边距，背景透明显露 pre 的 Shiki 背景；
+   color 设为 Shiki 基色，token span 在下方规则中按各自变量着色 */
+.app-prose .astro-code > code {
+  @apply block overflow-x-auto p-4;
+  background-color: transparent;
+  color: var(--shiki-light);
+}
+
+.dark .app-prose .astro-code > code {
+  color: var(--shiki-dark);
+}
+
+/* 语法高亮 token：每个 span 内联声明了 --shiki-light/--shiki-dark，
+   这里统一应用为 color，使关键字、字符串等着色生效。
+   限定在 code 内以避开 header 中的徽标 span */
+.app-prose .astro-code code span {
+  color: var(--shiki-light);
+}
+.dark .app-prose .astro-code code span {
+  color: var(--shiki-dark);
+}
+
+/* Shiki transformer 样式：差异行、高亮行、高亮词 */
+.app-prose .astro-code {
+  .line.diff.add {
+    @apply relative inline-block w-full bg-green-500/20;
+    &::before {
+      @apply absolute -left-3 text-green-500;
+      content: "+";
+    }
+  }
+  .line.diff.remove {
+    @apply relative inline-block w-full bg-red-500/20;
+    &::before {
+      @apply absolute -left-3 text-red-500;
+      content: "-";
+    }
+  }
+  .line.highlighted {
+    @apply inline-block w-full bg-slate-400/20;
+  }
+  .highlighted-word {
+    @apply rounded-sm border border-border px-0.5 py-px;
+  }
+}
+
+/* 折叠块（非 callout）：仅 summary 可点击，内容折叠 */
+.app-prose details:not(.callout) {
+  @apply text-foreground inline-block cursor-pointer select-none;
+}
+
+.app-prose summary {
+  @apply focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dashed focus-visible:outline-ring;
+}
+
+/* 可放大图片的光标与焦点提示（灯箱由 postEnhancements 注入 role） */
+.app-prose img[role="button"] {
+  @apply cursor-zoom-in;
+  &:focus-visible {
+    @apply outline-2 outline-offset-2 outline-dashed;
+  }
+}
+
+/* 标题锚点链接：使用前景色（黑色），悬停时不加下划线 */
+.app-prose .heading-link {
+  @apply text-foreground no-underline hover:no-underline;
+}
+/* 标题后的井号保持灰色 */
+.app-prose .heading-link span[aria-hidden="true"] {
+  @apply text-muted-foreground;
+}
+.app-prose .heading-anchor {
+  scroll-margin-top: 5rem;
+}

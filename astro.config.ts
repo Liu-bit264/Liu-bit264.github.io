@@ -1,0 +1,155 @@
+import {
+  defineConfig,
+  envField,
+  fontProviders,
+  svgoOptimizer,
+} from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
+import mdx from "@astrojs/mdx";
+import { unified } from "@astrojs/markdown-remark";
+import sitemap from "@astrojs/sitemap";
+import icon from "astro-icon";
+import remarkToc from "remark-toc";
+import remarkCollapse from "remark-collapse";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import rehypeCallouts from "rehype-callouts";
+import {
+  transformerNotationDiff,
+  transformerNotationHighlight,
+  transformerNotationWordHighlight,
+} from "@shikijs/transformers";
+import { transformerFileName } from "./src/utils/transformers/fileName";
+import { rehypeWrapTable } from "./src/utils/rehypeWrapTable";
+import { remarkPlayers } from "./src/utils/remarkPlayers";
+import { googleFontsMirrorProvider } from "./src/utils/googleFontsMirrorProvider";
+import config from "./xingluo.config";
+
+/** MDX 集成按需启用：关闭时既不加载集成，也不收集 .mdx 文件 */
+const mdxEnabled = config.features?.mdx !== false;
+const integrations = [
+  ...(mdxEnabled ? [mdx()] : []),
+  sitemap({
+    filter: (page) =>
+      (config.features?.showArchives !== false ||
+        !page.endsWith("/archives/")) &&
+      (config.features?.showCategories !== false ||
+        !page.includes("/categories/")),
+    // 启用 sitemap 内 hreflang 声明，映射 locale 到 hreflang 值
+    i18n: {
+      defaultLocale: "zh-cn",
+      locales: {
+        "zh-cn": "zh-CN",
+      },
+    },
+  }),
+  // 构建期内联 Font Awesome SVG 图标，零运行时 JS
+  icon(),
+];
+
+/** 播放器 remark 插件按需启用：任一播放器开启时才注入 */
+const playersConfig = config.features?.players;
+const playersEnabled = Boolean(
+  playersConfig && (playersConfig.aplayer || playersConfig.dplayer),
+);
+// remark 插件类型复杂（unified PluggableList），用 any[] 保持配置可读性
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const remarkPlugins: any[] = [
+  remarkToc,
+  [remarkCollapse, { test: "Table of contents" }],
+  remarkMath,
+];
+if (playersEnabled) {
+  remarkPlugins.push([
+    remarkPlayers,
+    {
+      aplayer: playersConfig?.aplayer ?? false,
+      dplayer: playersConfig?.dplayer ?? false,
+    },
+  ]);
+}
+
+/**
+ * CI 环境变量覆盖：允许在构建期通过环境变量改写站点 URL 与 base 子路径，
+ * 用于 GitHub Pages 项目页（https://<user>.github.io/<repo>/）等子路径部署场景。
+ * 未设置时回退到 xingluo.config.ts 的用户配置。
+ */
+const ciSiteUrl = process.env.CI_SITE_URL;
+const ciBaseUrl = process.env.CI_BASE_URL;
+const siteUrl = ciSiteUrl || config.site?.url;
+const baseUrl = ciBaseUrl || undefined;
+
+// 动态 OG 图字体：仅构建期供 satori 取用；关闭动态 OG 图时不注册字体，
+// 构建即不再访问任何字体 CDN
+const ogFonts: any[] =
+  config.features?.dynamicOgImage === false
+    ? []
+    : [
+        {
+          name: "Noto Sans SC",
+          cssVariable: "--font-og",
+          provider: config.features?.googleFontsMirror?.enabled
+            ? googleFontsMirrorProvider({
+                mirrorUrl:
+                  config.features.googleFontsMirror.url ??
+                  "https://fonts.googleapis.cn",
+              })
+            : fontProviders.google(),
+          fallbacks: ["sans-serif"],
+          weights: [400, 700],
+          styles: ["normal"],
+          formats: ["woff", "ttf"],
+        },
+      ];
+
+export default defineConfig({
+  site: siteUrl,
+  base: baseUrl,
+  integrations,
+  i18n: {
+    // 单语言站点：仅保留默认语言，避免生成其他语言的路由壳
+    locales: ["zh-cn"],
+    defaultLocale: "zh-cn",
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+  markdown: {
+    // 将 remark/rehype 插件传入 unified 处理器，避免使用已弃用的顶级字段
+    processor: unified({
+      remarkPlugins,
+      rehypePlugins: [rehypeCallouts, rehypeWrapTable, rehypeKatex],
+    }),
+    shikiConfig: {
+      themes: { light: "min-light", dark: "night-owl" },
+      defaultColor: false,
+      wrap: false,
+      transformers: [
+        transformerFileName({ hideDot: false }),
+        transformerNotationHighlight(),
+        transformerNotationWordHighlight(),
+        transformerNotationDiff({ matchAlgorithm: "v3" }),
+      ],
+    },
+  },
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  experimental: {
+    // 启用 SVG 优化，自动压缩内联与引用的 SVG 图标
+    svgOptimizer: svgoOptimizer(),
+  },
+  // 动态 OG 图使用的字体：仅构建期供 satori 取用，不注入站点 CSS。
+  // 关闭动态 OG 图时跳过字体注册，避免构建期访问字体 CDN
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- 空数组状态下 Astro 生成的字体类型会收窄为 []，any[] 才能同时通过两种状态的类型检查
+  fonts: ogFonts,
+  env: {
+    schema: {
+      PUBLIC_GOOGLE_SITE_VERIFICATION: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+    },
+  },
+});

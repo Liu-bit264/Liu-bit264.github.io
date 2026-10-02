@@ -1,0 +1,51 @@
+---
+import { useTranslations } from "@/i18n";
+import { tplStr } from "@/i18n";
+import config from "@/config";
+import LinkButton from "@/components/LinkButton.astro";
+import { getSocialIcon, capitalizeName } from "@/lib/socialIcons";
+
+interface Props {
+  /** 文章绝对 URL，用于分享 */
+  url: string;
+  /** 文章标题，部分平台用作分享文本 */
+  title?: string;
+}
+
+const { url, title: _title = "" } = Astro.props;
+const t = useTranslations(Astro.currentLocale);
+const { shareLinks } = config;
+
+/** 根据分享平台生成完整链接 */
+function buildShareUrl(name: string, baseUrl: string, articleUrl: string): string {
+  if (name === "mail") {
+    const body = encodeURIComponent(articleUrl);
+    return baseUrl + body;
+  }
+  return baseUrl + encodeURIComponent(articleUrl);
+}
+
+/** 获取分享链接的无障碍标题 */
+function getShareLabel(name: string, linkTitle?: string): string {
+  if (linkTitle) return linkTitle;
+  if (name === "mail") return t.post.sharePostViaEmail;
+  return tplStr(t.post.sharePostOn, { name: capitalizeName(name) });
+}
+---
+
+<div class="flex flex-wrap items-center gap-2">
+  <span class="text-sm text-muted-foreground leading-9">{t.post.sharePostIntro}</span>
+  {
+    shareLinks.map(({ name, url: baseUrl, linkTitle }) => {
+      const Icon = getSocialIcon(name);
+      const href = buildShareUrl(name, baseUrl, url);
+      const label = getShareLabel(name, linkTitle);
+      return Icon ? (
+        <LinkButton href={href} class="size-8" title={label} target="_blank" rel="noopener noreferrer">
+          <Icon class="size-3.5" />
+          <span class="sr-only">{label}</span>
+        </LinkButton>
+      ) : null;
+    })
+  }
+</div>

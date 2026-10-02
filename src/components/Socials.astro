@@ -1,0 +1,31 @@
+---
+import config from "@/config";
+import LinkButton from "./LinkButton.astro";
+import { getSocialIcon, capitalizeName } from "@/lib/socialIcons";
+
+const { site, socials } = config;
+
+/** 计算社交链接的无障碍标题 */
+function getTitle(name: string, url: string, linkTitle?: string): string {
+  if (linkTitle) return linkTitle;
+  if (url.startsWith("mailto:") || name === "mail") {
+    return `发送邮件给 ${site.title}`;
+  }
+  return `${site.title} 在 ${capitalizeName(name)}`;
+}
+---
+
+<div class="flex flex-wrap items-center gap-1">
+  {
+    socials.map(({ name, url, linkTitle }) => {
+      const Icon = getSocialIcon(name);
+      const title = getTitle(name, url, linkTitle);
+      return Icon ? (
+        <LinkButton href={url} class="size-9" title={title} target="_blank" rel="noopener noreferrer">
+          <Icon class="size-4" />
+          <span class="sr-only">{title}</span>
+        </LinkButton>
+      ) : null;
+    })
+  }
+</div>

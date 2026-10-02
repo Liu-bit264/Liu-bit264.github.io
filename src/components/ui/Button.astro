@@ -1,0 +1,42 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { buttonVariants, type ButtonVariant, type ButtonSize } from "./button";
+
+interface Props extends Omit<HTMLAttributes<"a">, "size"> {
+  /** 按钮样式变体 */
+  variant?: ButtonVariant;
+  /** 按钮尺寸 */
+  size?: ButtonSize;
+  /** 额外类名 */
+  class?: string;
+  /** 是否禁用（仅 button） */
+  disabled?: boolean;
+}
+
+const {
+  variant = "default",
+  size = "default",
+  class: className,
+  href,
+  disabled,
+  type: _type,
+  ...rest
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+const computedClass = buttonVariants({ variant, size, className });
+const buttonProps: Record<string, unknown> = href
+  ? { href: disabled ? undefined : href, "aria-disabled": disabled ? "true" : undefined }
+  : { type: "button", disabled };
+---
+
+<Tag
+  data-slot="button"
+  data-variant={variant}
+  data-size={size}
+  class={computedClass}
+  {...buttonProps}
+  {...rest}
+>
+  <slot />
+</Tag>
